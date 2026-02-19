@@ -2,6 +2,7 @@ services:
   - type: web
     name: jee-predictor-backend
     env: python
+    runtime: python-3.11.0
     region: oregon
     plan: free
     buildCommand: |
@@ -9,6 +10,3 @@ services:
       pip install wheel setuptools
       pip install --only-binary=:all: -r requirements.txt
     startCommand: gunicorn --bind 0.0.0.0:$PORT --chdir backend app:app
-    envVars:
-      - key: PYTHON_VERSION
-        value: 3.11
