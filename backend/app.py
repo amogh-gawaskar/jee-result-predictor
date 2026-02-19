@@ -578,6 +578,7 @@ def get_colleges():
 
         # Select and rename columns
         result_df = df[['Institute', 'Academic Program Name', 'State', 'Closing Rank', 'Expected Salary']].copy()
+        result_df.sort_values(by='Closing Rank')
         result_df.columns = ['College', 'Course', 'State', 'Closing Rank', 'Expected Salary as per NIRF']
 
         # Replace NaN values with None for valid JSON
