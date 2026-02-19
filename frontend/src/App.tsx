@@ -18,10 +18,10 @@ interface College {
 }
 
 function App() {
-  // API Base URL - use localhost in development, relative path in production
+  // API Base URL - uses relative path in production (Vercel serverless), localhost in development
   const API_BASE_URL = process.env.NODE_ENV === 'development'
     ? 'http://localhost:5001'
-    : '';
+    : ''; // Relative path for Vercel
 
   const [category, setCategory] = useState<string>('OPEN');
   const [inputType, setInputType] = useState<string>('marks');
