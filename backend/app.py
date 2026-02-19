@@ -578,14 +578,18 @@ def get_colleges():
 
         # Select and rename columns
         result_df = df[['Institute', 'Academic Program Name', 'State', 'Closing Rank', 'Expected Salary']].copy()
-        result_df.sort_values(by='Closing Rank')
+        result_df = result_df.sort_values(by='Closing Rank')
         result_df.columns = ['College', 'Course', 'State', 'Closing Rank', 'Expected Salary as per NIRF']
 
-        # Replace NaN values with None for valid JSON
-        result_df = result_df.where(pd.notnull(result_df), None)
-
-        # Convert to list of dictionaries, preserving CSV order
+        # Convert to list of dictionaries
         results = result_df.to_dict('records')
+
+        # Replace NaN with None in the dictionaries (pandas 3.0 compatibility)
+        import math
+        for record in results:
+            for key, value in record.items():
+                if isinstance(value, float) and math.isnan(value):
+                    record[key] = None
         print(f"Returning {len(results)} colleges")
 
         return jsonify({'success': True, 'colleges': results})
