@@ -1,30 +1,34 @@
+// {
+//   "version": 2,
+//   "builds": [
+//     {
+//       "src": "api/index.py",
+//       "use": "@vercel/python"
+//     },
+//     {
+//       "src": "frontend/package.json",
+//       "use": "@vercel/static-build",
+//       "config": {
+//         "distDir": "build"
+//       }
+//     }
+//   ],
+//   "routes": [
+//     {
+//       "src": "/api/(.*)",
+//       "dest": "/api/index.py"
+//     },
+//     {
+//       "src": "/(.*\\.(js|css|ico|png|jpg|jpeg|svg|json|txt))",
+//       "dest": "/frontend/$1"
+//     },
+//     {
+//       "src": "/(.*)",
+//       "dest": "/frontend/index.html"
+//     }
+//   ]
+// }
+
 {
-  "version": 2,
-  "builds": [
-    {
-      "src": "api/index.py",
-      "use": "@vercel/python"
-    },
-    {
-      "src": "frontend/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "build"
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/index.py"
-    },
-    {
-      "src": "/(.*\\.(js|css|ico|png|jpg|jpeg|svg|json|txt))",
-      "dest": "/frontend/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/frontend/index.html"
-    }
-  ]
+  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
 }
