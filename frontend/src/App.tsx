@@ -18,6 +18,11 @@ interface College {
 }
 
 function App() {
+  // API Base URL - use localhost in development, relative path in production
+  const API_BASE_URL = process.env.NODE_ENV === 'development'
+    ? 'http://localhost:5001'
+    : '';
+
   const [category, setCategory] = useState<string>('OPEN');
   const [inputType, setInputType] = useState<string>('marks');
   const [inputValue, setInputValue] = useState<string>('');
@@ -81,7 +86,7 @@ function App() {
     setLoading(true);
 
     try {
-      const response = await fetch('http://localhost:5001/api/predict', {
+      const response = await fetch(`${API_BASE_URL}/api/predict`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -139,7 +144,7 @@ function App() {
     }
 
     try {
-      const response = await fetch('http://localhost:5001/api/colleges', {
+      const response = await fetch(`${API_BASE_URL}/api/colleges`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -240,6 +240,43 @@ Uses a piecewise model for accuracy across ranges:
 - Separate forward (AIR → Category Rank) and inverse (Category Rank → AIR) functions
 - Handles all categories: SC, ST, OBC-NCL, EWS, OPEN
 
+## Deployment
+
+### Deploy to Vercel
+
+This project is configured for easy deployment on Vercel:
+
+1. **Import your repository** on [Vercel](https://vercel.com)
+2. Vercel will automatically detect the configuration from `vercel.json`
+3. Click "Deploy"
+
+**Configuration files:**
+- `vercel.json` - Build and route configuration
+- `api/index.py` - Serverless function entry point
+- `requirements.txt` - Python dependencies (root level for Vercel)
+
+**Environment Detection:**
+- Development: Frontend connects to `http://localhost:5001`
+- Production: Frontend uses relative paths (`/api/*`)
+
+### Manual Deployment Steps
+
+If deploying manually:
+
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+cd "/path/to/JEE Model"
+vercel --prod
+```
+
+**Important Notes:**
+- The CSV file (2.8MB) will be included in the deployment
+- First deployment may take 2-3 minutes due to dependencies
+- Subsequent deployments are faster (~30 seconds)
+
 ## Contributing
 
 This project was built with Claude Code. For questions or issues, please refer to CLAUDE.md for detailed development logs.
