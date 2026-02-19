@@ -42,6 +42,11 @@ function App() {
   const [loadingColleges, setLoadingColleges] = useState<boolean>(false);
   const [collegeError, setCollegeError] = useState<string>('');
 
+  // Table sorting and filtering state
+  const [sortColumn, setSortColumn] = useState<keyof College>('Closing Rank');
+  const [sortDirection, setSortDirection] = useState<'asc' | 'desc'>('asc');
+  const [searchQuery, setSearchQuery] = useState<string>('');
+
   const inputTypes = [
     { value: 'marks', label: 'Raw Marks (out of 300)' },
     { value: 'percentage', label: 'Percentage Marks (%)' },
@@ -167,6 +172,10 @@ function App() {
       if (data.success) {
         setColleges(data.colleges);
         console.log('Set colleges:', data.colleges.length);
+        // Reset sorting and search when new data loads
+        setSortColumn('Closing Rank');
+        setSortDirection('asc');
+        setSearchQuery('');
       } else {
         console.log('Error from backend:', data.error);
         setCollegeError(data.error || 'An error occurred');
@@ -211,6 +220,50 @@ function App() {
     }
     return undefined;
   };
+
+  // Handle column sort
+  const handleSort = (column: keyof College) => {
+    if (sortColumn === column) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortColumn(column);
+      setSortDirection('asc');
+    }
+  };
+
+  // Sort and filter colleges
+  const getSortedAndFilteredColleges = () => {
+    let filtered = colleges;
+
+    // Apply search filter
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      filtered = colleges.filter(
+        (college) =>
+          college.College.toLowerCase().includes(query) ||
+          college.Course.toLowerCase().includes(query) ||
+          college.State.toLowerCase().includes(query)
+      );
+    }
+
+    // Apply sorting
+    return [...filtered].sort((a, b) => {
+      const aValue = a[sortColumn];
+      const bValue = b[sortColumn];
+
+      if (typeof aValue === 'number' && typeof bValue === 'number') {
+        return sortDirection === 'asc' ? aValue - bValue : bValue - aValue;
+      }
+
+      const aStr = String(aValue || '');
+      const bStr = String(bValue || '');
+      return sortDirection === 'asc'
+        ? aStr.localeCompare(bStr)
+        : bStr.localeCompare(aStr);
+    });
+  };
+
+  const sortedAndFilteredColleges = getSortedAndFilteredColleges();
 
   return (
     <div className="App">
@@ -374,26 +427,47 @@ function App() {
           <div className="colleges-container">
             <h2>Eligible Colleges & Courses</h2>
             <p className="colleges-info">
-              Showing {colleges.length} options based on your rank with 10% safety margin
+              Showing {sortedAndFilteredColleges.length} of {colleges.length} options based on your rank with 10% safety margin
             </p>
+
+            <div className="search-container">
+              <input
+                type="text"
+                className="search-input"
+                placeholder="Search by college, course, or state..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
+
             <div className="table-container">
               <table className="colleges-table">
                 <thead>
                   <tr>
-                    <th>College</th>
-                    <th>Course</th>
-                    <th>State</th>
-                    <th>Closing Rank</th>
-                    <th>Expected Salary (NIRF)</th>
+                    <th onClick={() => handleSort('College')} className="sortable">
+                      College {sortColumn === 'College' && (sortDirection === 'asc' ? '▲' : '▼')}
+                    </th>
+                    <th onClick={() => handleSort('Course')} className="sortable">
+                      Course {sortColumn === 'Course' && (sortDirection === 'asc' ? '▲' : '▼')}
+                    </th>
+                    <th onClick={() => handleSort('State')} className="sortable">
+                      State {sortColumn === 'State' && (sortDirection === 'asc' ? '▲' : '▼')}
+                    </th>
+                    <th onClick={() => handleSort('Closing Rank')} className="sortable">
+                      Closing Rank {sortColumn === 'Closing Rank' && (sortDirection === 'asc' ? '▲' : '▼')}
+                    </th>
+                    <th onClick={() => handleSort('Expected Salary as per NIRF')} className="sortable">
+                      Expected Salary (NIRF) {sortColumn === 'Expected Salary as per NIRF' && (sortDirection === 'asc' ? '▲' : '▼')}
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
-                  {colleges.map((college, index) => (
+                  {sortedAndFilteredColleges.map((college, index) => (
                     <tr key={index}>
                       <td>{college.College}</td>
                       <td>{college.Course}</td>
                       <td>{college.State}</td>
-                      <td>{college['Closing Rank']}</td>
+                      <td>{college['Closing Rank'].toLocaleString('en-IN')}</td>
                       <td>₹{college['Expected Salary as per NIRF']?.toLocaleString('en-IN') || 'N/A'}</td>
                     </tr>
                   ))}

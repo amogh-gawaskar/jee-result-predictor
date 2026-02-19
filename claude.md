@@ -173,6 +173,24 @@ The application allows users to input any one parameter (marks, percentage, perc
 
 **Repository:** https://github.com/amogh-gawaskar/jee-result-predictor
 
+Version 2.1 - UI changes
+
+1. Increase the width of the college table so that user can see all columns without scrolling
+2. Sort the output by closing ranks by default
+3. Allow user to sort the table using the column of their choosing
+4. Provide a search bar which can be used to filter the table
+
+COMPLETED:
+- Increased container max-width from 600px to 1400px
+- Set table min-width to 1200px for better column visibility
+- Added sorting state (sortColumn, sortDirection) with default sort by 'Closing Rank' ascending
+- Implemented handleSort() function to toggle sort direction on column click
+- Added getSortedAndFilteredColleges() function to apply both search and sort
+- Added search bar with live filtering by college, course, or state
+- Made all table headers clickable with visual indicators (▲/▼)
+- Added hover effects on sortable headers
+- Updated colleges count to show "X of Y" when search filter is active
+- Added number formatting for Closing Rank display
 
 
 
