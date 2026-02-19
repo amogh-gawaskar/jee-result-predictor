@@ -500,8 +500,10 @@ def get_colleges():
         state = data.get('state')
         print(f"Parsed: category={category}, rank={category_rank}, gender={gender}, state={state}")
 
-        # Load CSV file
-        csv_path = os.path.join(os.path.dirname(__file__), '..', 'College Databases - JoSAA 2024.csv')
+        # Load CSV file - works for both local and Vercel
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        csv_path = os.path.join(current_dir, '..', 'College Databases - JoSAA 2024.csv')
+        csv_path = os.path.abspath(csv_path)
         df = pd.read_csv(csv_path)
 
         # Filter by Entrance Test = JEE Main
