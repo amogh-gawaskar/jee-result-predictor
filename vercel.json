@@ -2,7 +2,15 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/index.py",
+      "src": "api/health/index.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "api/predict/index.py",
+      "use": "@vercel/python"
+    },
+    {
+      "src": "api/colleges/index.py",
       "use": "@vercel/python"
     },
     {
@@ -15,8 +23,16 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",
-      "dest": "/api/index.py"
+      "src": "/api/health",
+      "dest": "/api/health/index.py"
+    },
+    {
+      "src": "/api/predict",
+      "dest": "/api/predict/index.py"
+    },
+    {
+      "src": "/api/colleges",
+      "dest": "/api/colleges/index.py"
     },
     {
       "src": "/static/(.*)",
