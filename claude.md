@@ -199,6 +199,15 @@ Version 2.2 - More UI changes
 - Show a line on the output page of the college predictor, saying 'Click on a column header to sort data' in small font
 - Show a disclaimer on the output page after clicking 'Predict' - 'Predictions based on data of 10,000+ students from JEE 2024 and 2025' in small font
 
+COMPLETED:
+- Jammu and Kashmir already uses "and" (not &) in both frontend and backend
+- Added .data-source class with italic styling below subtitle
+- Added .disclaimer class showing prediction data source after results grid
+- Changed "State" label to "Your home state" in college form
+- Added .field-note explaining home state quota below state dropdown
+- Added .sort-instruction text above college table
+- All new text elements styled in small, gray, italic fonts as requested
+
 
 
 
