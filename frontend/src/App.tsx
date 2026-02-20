@@ -69,7 +69,7 @@ function App() {
     'Karnataka', 'Kerala', 'Madhya Pradesh', 'Maharashtra', 'Manipur',
     'Meghalaya', 'Mizoram', 'Nagaland', 'Odisha', 'Punjab',
     'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura',
-    'Uttar Pradesh', 'Uttarakhand', 'West Bengal', 'Jammu & Kashmir',
+    'Uttar Pradesh', 'Uttarakhand', 'West Bengal', 'Jammu and Kashmir',
     'Delhi', 'Puducherry', 'Chandigarh', 'Ladakh'
   ];
 
@@ -270,6 +270,7 @@ function App() {
       <div className="container">
         <h1>JEE Mains Result Predictor</h1>
         <p className="subtitle">Predict your JEE Mains results using any input parameter</p>
+        <p className="data-source">Based on JoSAA 2024 closing rank data</p>
 
         <form onSubmit={handleSubmit} className="prediction-form">
           <div className="form-group">
@@ -364,6 +365,8 @@ function App() {
               </div>
             </div>
 
+            <p className="disclaimer">Predictions based on data of 10,000+ students from JEE 2024 and 2025</p>
+
             {!showCollegeForm && (
               <div className="college-button-container">
                 <button
@@ -396,7 +399,7 @@ function App() {
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="state">State</label>
+                  <label htmlFor="state">Your home state</label>
                   <select
                     id="state"
                     value={state}
@@ -411,6 +414,7 @@ function App() {
                       </option>
                     ))}
                   </select>
+                  <p className="field-note">Colleges from your home state will have closing ranks for the home state quota if applicable</p>
                 </div>
               </div>
 
@@ -439,6 +443,8 @@ function App() {
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
+
+            <p className="sort-instruction">Click on a column header to sort data</p>
 
             <div className="table-container">
               <table className="colleges-table">

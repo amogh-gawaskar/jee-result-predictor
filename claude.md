@@ -192,6 +192,13 @@ COMPLETED:
 - Updated colleges count to show "X of Y" when search filter is active
 - Added number formatting for Closing Rank display
 
+Version 2.2 - More UI changes
+- Push App.tsx to remote (changed & in Jammu & Kahsmir to 'and')
+- Change the name of the 'State' dropdown to 'Your home state', write a line below it saying 'Colleges from your home state will have closing ranks for the home state quota if applicable' in small font
+- Add a line below the title of the app - 'Based on JoSAA 2024 closing rank data'
+- Show a line on the output page of the college predictor, saying 'Click on a column header to sort data' in small font
+- Show a disclaimer on the output page after clicking 'Predict' - 'Predictions based on data of 10,000+ students from JEE 2024 and 2025' in small font
+
 
 
 
