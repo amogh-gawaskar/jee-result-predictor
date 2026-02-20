@@ -81,8 +81,8 @@ function App() {
     const value = parseFloat(inputValue);
 
     if (inputType === 'marks') {
-      if (value < 0 || value > 300) {
-        setError('Enter a value between 0 and 300');
+      if (value > 300) {
+        setError('Enter a value up to 300');
         return;
       }
     } else if (inputType === 'percentage' || inputType === 'percentile') {
@@ -206,7 +206,7 @@ function App() {
   };
 
   const getInputMin = () => {
-    if (inputType === 'marks' || inputType === 'percentage' || inputType === 'percentile') {
+    if (inputType === 'percentage' || inputType === 'percentile') {
       return 0;
     }
     return undefined;

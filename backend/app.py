@@ -450,21 +450,40 @@ def predict():
 
         # Based on input type, calculate all other values
         if input_type == 'marks':
+            # Handle negative marks - treat as 0
+            input_value = max(0, input_value)
             results['marks'] = int(input_value)
-            results['percentage'] = round(marks_to_percentage(input_value), 2)
-            results['percentile'] = round(percentage_to_percentile(results['percentage']), 2)
-            results['allIndiaRank'] = percentile_to_air(results['percentile'])
-            results['categoryRank'] = air_to_cat(category, results['allIndiaRank'])
+
+            # Edge case: 300 marks = 100 percentile, AIR = 1
+            if input_value >= 300:
+                results['marks'] = 300
+                results['percentage'] = 100.0
+                results['percentile'] = 100.0
+                results['allIndiaRank'] = 1
+                results['categoryRank'] = 1
+            else:
+                results['percentage'] = round(marks_to_percentage(input_value), 2)
+                results['percentile'] = round(percentage_to_percentile(results['percentage']), 5)
+                results['allIndiaRank'] = percentile_to_air(results['percentile'])
+                results['categoryRank'] = air_to_cat(category, results['allIndiaRank'])
 
         elif input_type == 'percentage':
-            results['percentage'] = round(input_value, 2)
-            results['marks'] = percentage_to_marks(input_value)
-            results['percentile'] = round(percentage_to_percentile(input_value), 2)
-            results['allIndiaRank'] = percentile_to_air(results['percentile'])
-            results['categoryRank'] = air_to_cat(category, results['allIndiaRank'])
+            # Edge case: 100 percentage = 100 percentile, AIR = 1
+            if input_value >= 100:
+                results['percentage'] = 100.0
+                results['marks'] = 300
+                results['percentile'] = 100.0
+                results['allIndiaRank'] = 1
+                results['categoryRank'] = 1
+            else:
+                results['percentage'] = round(input_value, 2)
+                results['marks'] = percentage_to_marks(input_value)
+                results['percentile'] = round(percentage_to_percentile(input_value), 5)
+                results['allIndiaRank'] = percentile_to_air(results['percentile'])
+                results['categoryRank'] = air_to_cat(category, results['allIndiaRank'])
 
         elif input_type == 'percentile':
-            results['percentile'] = round(input_value, 2)
+            results['percentile'] = round(input_value, 5)
             results['percentage'] = round(percentile_to_percentage(input_value), 2)
             results['marks'] = percentage_to_marks(results['percentage'])
             results['allIndiaRank'] = percentile_to_air(input_value)
@@ -472,7 +491,7 @@ def predict():
 
         elif input_type == 'allIndiaRank':
             results['allIndiaRank'] = int(input_value)
-            results['percentile'] = round(air_to_percentile(int(input_value)), 2)
+            results['percentile'] = round(air_to_percentile(int(input_value)), 5)
             results['percentage'] = round(percentile_to_percentage(results['percentile']), 2)
             results['marks'] = percentage_to_marks(results['percentage'])
             results['categoryRank'] = air_to_cat(category, int(input_value))
@@ -480,7 +499,7 @@ def predict():
         elif input_type == 'categoryRank':
             results['categoryRank'] = int(input_value)
             results['allIndiaRank'] = cat_to_air(category, int(input_value))
-            results['percentile'] = round(air_to_percentile(results['allIndiaRank']), 2)
+            results['percentile'] = round(air_to_percentile(results['allIndiaRank']), 5)
             results['percentage'] = round(percentile_to_percentage(results['percentile']), 2)
             results['marks'] = percentage_to_marks(results['percentage'])
 
